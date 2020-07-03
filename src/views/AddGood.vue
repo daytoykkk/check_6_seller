@@ -443,6 +443,7 @@ export default {
         .then(res => {
           that.id = res.data.货物参数.productId;
           that.isUpload = true;
+          localStorage.setItem("productName", res.data.货物参数.productName);
         })
         .catch(error => {
           console.log(error);

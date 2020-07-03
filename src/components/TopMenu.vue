@@ -113,6 +113,7 @@ export default {
     },
     tuichu() {
       localStorage.clear();
+      this.$router.push({ path: "/" });
       window.location.reload();
     },
     getMsg(){

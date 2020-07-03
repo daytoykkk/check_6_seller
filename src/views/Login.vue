@@ -86,7 +86,7 @@ export default {
       }
 
       form.append("UserLoginName", that.number);
-      form.append("UserPassword", that.password);
+      form.append("UserPassword", that.$md5(that.password));
       form.append("Code", that.code);
 
       this.$axios
@@ -94,7 +94,7 @@ export default {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then(res => {
-          if (res.data == "验证码错误") {
+           if (res.data == "验证码错误"||res.data=="用户名或密码错误") {
             that.isError = true;
           } else {
             that.isError = false;

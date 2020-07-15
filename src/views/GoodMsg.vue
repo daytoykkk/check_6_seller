@@ -3,44 +3,46 @@
     <div class="bg-box">
       <div class="title-box">
         <p class="title-box-p">{{msg.productName}}</p>
-        <div
-          style="float:right;width:280px;height:60x;text-align:center;border: solid 3px #ffffff;"
-        >
+        <div style="float:right;width:8em;text-align:center;border: solid 3px #ffffff;">
           <p
-            style="font-family: FZLanTingHei-B-GBK;font-size: 35px;font-weight: normal;font-stretch: normal;line-height: 5px;letter-spacing: 0px;color: #ffffff;"
+            style="font-family: FZLanTingHei-B-GBK;font-size: 1.3em;font-weight: normal;font-stretch: normal;line-height: 0.1em;letter-spacing: 0px;color: #ffffff;"
           >￥{{msg.productPrice}}</p>
         </div>
       </div>
     </div>
     <!--轮播图-->
     <div class="banner">
-      <div class="large-img" style="width:550px;height:550px;border:1px solid red;">
-        <img src />
+      <div class="large-img" style="width:400px;height:400px;">
+        <img :src="largeImgUrl" style="width:400px;height:400px;"/>
       </div>
 
-      <div class="small-box">
-        <div
-          class="iconleft"
-          @click="zuohua()"
-          style="font-size:4em;cursor:pointer;margin-right:auto;"
-        >
-          <i class="el-icon-arrow-left"></i>
+      
+        <div class="small-box">
+          <div
+            class="iconleft"
+            @click="zuohua()"
+            style="font-size:3em;cursor:pointer;margin-right:auto;"
+          >
+            <i class="el-icon-arrow-left"></i>
+          </div>
+         <div class="fix-box">
+            <div class="li-img">
+            <ul :style="{'margin-left':-calleft+'px'}">
+              <li v-for="(item,index) in imgUrlList" :key="index">
+                <img @click="changeLarge(index)" :src="item" style="width:50px;height:50px;cursor:pointer;" />
+              </li>
+            </ul>
+          </div>
+         </div>
+          <div
+            class="iconright"
+             @click="youhua()"
+            style="font-size:3em;cursor:pointer;margin-left:auto;"
+          >
+            <i class="el-icon-arrow-right"></i>
+          </div>
         </div>
-        <div class="li-img">
-          <ul :style="{'left':calleft+'px'}">
-            <li v-for="(item,index) in imgUrlList" :key="index">
-              <img :src="item" style="width:80px;height:80px;border:1px solid red;" />
-            </li>
-          </ul>
-        </div>
-        <div
-          class="iconright"
-          @click="youhua()"
-          style="font-size:4em;cursor:pointer;margin-left:auto;"
-        >
-          <i class="el-icon-arrow-right"></i>
-        </div>
-      </div>
+    
     </div>
 
     <!--详情-->
@@ -57,8 +59,8 @@
       <div style="display:flex">
         <label for="slogan">商品标语：</label>
         <p
-          style="margin-top:-5px;font-size: 25px;color: #000000;width:700px;word-wrap:break-word;word-break:break-all;overflow: hidden;"
-        >{{msg.ProductLevel}}</p>
+          style="margin-left:-1.5em;margin-top:-5px;font-size: 1.1em;color: #000000;width:700px;word-wrap:break-word;word-break:break-all;overflow: hidden;"
+        >{{msg.productLevel}}</p>
       </div>
       <div class="basic-box">
         <label for>
@@ -69,7 +71,7 @@
         <br />
         <br />
         <label for>商品产地：</label>
-        <span class="msg-p">{{msg.ProductPlace}}</span>
+        <span class="msg-p">{{msg.productPlace}}</span>
         <br />
         <br />
         <label for>
@@ -84,7 +86,7 @@
           <span style="margin-left:0.3em"></span>质
           <span style="margin-left:0.3em"></span>期：
         </label>
-        <span class="msg-p">{{msg.ProductDdl}}</span>
+        <span class="msg-p">{{msg.productDdl}}</span>
         <br />
         <br />
         <label for>
@@ -92,17 +94,17 @@
           <span style="margin-left:0.3em"></span>含
           <span style="margin-left:0.3em"></span>量：
         </label>
-        <span class="msg-p">哈哈哈</span>
+        <span class="msg-p">{{msg.productContent}}</span>
         <br />
         <br />
         <label for>7天无理由退换货：</label>
-        <span class="msg-p">{{msg.ProductChange=="true"?"支持":"不支持"}}</span>
+        <span class="msg-p">{{msg.productChange==true?"支持":"不支持"}}</span>
         <br />
         <br />
         <div style="display:flex">
           <label for="content">商品描述：</label>
           <p
-            style="margin-top:-5px;font-size: 25px;color: #000000;width:700px;word-wrap:break-word;word-break:break-all;overflow: hidden;"
+            style="margin-top:-5px;margin-left:-1.5em;font-size:1.1em;color: #000000;width:700px;word-wrap:break-word;word-break:break-all;overflow: hidden;"
           >{{msg.productDescription}}</p>
         </div>
         <br />
@@ -123,56 +125,56 @@
 
 <style scoped>
 .bg-box {
-  height: 353px;
+  height: 13em;
   background-color: #109abf;
 }
 .title-box {
-  width: 800px;
   float: right;
-  margin-right: 20%;
-  margin-top: 70px;
+  width: 35em;
+  margin-right: 18%;
+  margin-top: 2em;
 }
 .title-box-p {
   font-family: FZLanTingHei-R-GBK;
-  font-size: 40px;
+  font-size: 1.5em;
   font-weight: normal;
   font-stretch: normal;
-  line-height: 51px;
+  line-height: 1.5em;
   letter-spacing: 0px;
   color: #ffffff;
-  width: 900px;
+  width: 23em;
   text-overflow: ellipsis;
   overflow: hidden;
 }
 .banner {
-  border: 1px solid red;
-  width: 550px;
-  height: 728px;
-  margin-top: -200px;
+  width: 400px;
+  height: 550px;
+  margin-top: -120px;
   margin-left: 12%;
 }
 .msg-box {
   float: right;
-  width: 54%;
-  margin-top: -500px;
+  width: 53%;
+  margin-top: -26em;
   margin-right: 5%;
 }
 .msg-box label {
   width: 110px;
   height: 22px;
   font-family: FZLanTingHei-R-GBK;
-  font-size: 22px;
+  font-size: 1em;
   font-weight: normal;
-  line-height: 22px;
+  line-height: 1em;
   color: #b2b2b2;
 }
 #number {
   width: 145px;
-  height: 43px;
+  height: 2em;
   border-radius: 5px;
   border: solid 1px #cdcaca;
+  padding-left: 10px;
   font-family: FZLanTingHei-R-GBK;
-  font-size: 20px;
+  font-size: 1em;
   font-weight: normal;
   font-stretch: normal;
   line-height: 23px;
@@ -182,12 +184,12 @@
 .modify-btn {
   margin-left: 2em;
   width: 113px;
-  height: 29px;
+  height: 1.8em;
   background-color: #a2c2d7;
   border-radius: 5px;
   border: solid 1px #a2c2d7;
   font-family: FZLanTingHei-R-GBK;
-  font-size: 17px;
+  font-size: 1em;
   font-weight: normal;
   letter-spacing: 0px;
   color: #ffffff;
@@ -195,10 +197,10 @@
 }
 .msg-p {
   font-family: FZLanTingHei-R-GBK;
-  font-size: 25px;
+  font-size: 1.1em;
   font-weight: normal;
   font-stretch: normal;
-  line-height: 50px;
+  line-height: 1.1em;
   letter-spacing: 0px;
   color: #000000;
 }
@@ -214,52 +216,52 @@
   float: right;
   margin-top: 60px;
   margin-right: 3em;
-  width: 206px;
-  height: 55px;
+  width: 9em;
+  height: 2.2em;
   background-color: #a2c2d7;
   border-radius: 5px;
   border: none;
   border: solid 1px #a2c2d7;
   font-family: FZLanTingHei-R-GBK;
-  font-size: 25px;
+  font-size: 1.1em;
   font-weight: normal;
   font-stretch: normal;
-  line-height: 50px;
+  line-height: 1em;
   letter-spacing: 0px;
   color: #ffffff;
 }
 .delete-btn {
   float: right;
   margin-top: 60px;
-  width: 206px;
-  height: 55px;
+  width: 8em;
+  height: 2.2em;
   background-color: #224761;
   border: none;
   border-radius: 5px;
   font-family: FZLanTingHei-R-GBK;
-  font-size: 25px;
+  font-size: 1.1em;
   font-weight: normal;
   font-stretch: normal;
-  line-height: 50px;
+  line-height: 1em;
   letter-spacing: 0px;
   color: #ffffff;
 }
 .small-box {
-  border: 1px solid red;
   display: flex;
   margin-top: 2em;
   width: 100%;
 }
+.fix-box{
+  width: 320px;
+    overflow: hidden;
+}
 .li-img {
-  border: 1px solid palevioletred;
-  width: 520px;
-  height: 80px;
-  margin-left: -10px;
-
+  width: 320px;
+  height: 50px;
   overflow: hidden;
 }
 .small-box li {
-  width: 80px;
+  width: 50px;
   margin-right: 10px;
   margin-top: -15px;
   float: left;
@@ -276,7 +278,7 @@ export default {
       imgUrlList: [], //图片数组
       largeImgUrl: "",
       id: "",
-      calleft: 0,
+      calleft: 40,
       pageNumber: 0, //图片个数
       dialogVisible: false
     };
@@ -291,9 +293,17 @@ export default {
       let form = new FormData();
       form.append("ProductName", name);
       that.$axios
-        .post("/consumer/showOneProduct/", form, {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" }
-        })
+        .get(
+          "/consumer/showOneProduct/",
+          {
+            params: {
+              ProductName: name
+            }
+          },
+          {
+            headers: { "Content-Type": "application/x-www-form-urlencoded" }
+          }
+        )
         .then(res => {
           that.msg = res.data.这个货物;
           that.id = that.msg.productId;
@@ -304,15 +314,17 @@ export default {
         });
     },
     zuohua() {
-      this.calleft -= 100;
-      if (this.calleft < -this.pageNumber * 100) {
-        this.calleft = 0;
+       if(this.pageNumber==6){
+        this.calleft = 40;
+      }else{
+        return
       }
     },
     youhua() {
-      this.callleft += 100;
-      if (this.calleft > 0) {
-        this.calleft = this.pageNumber * 100 - 100;
+      if(this.pageNumber==6){
+        this.calleft = 100;
+      }else{
+        return
       }
     },
     getImgName(id) {
@@ -321,9 +333,17 @@ export default {
       let form = new FormData();
       form.append("ProductId", id);
       that.$axios
-        .post("/consumer/showProductImage/", form, {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" }
-        })
+        .get(
+          "/consumer/showProductImage/",
+          {
+            params: {
+              ProductId: id
+            }
+          },
+          {
+            headers: { "Content-Type": "application/x-www-form-urlencoded" }
+          }
+        )
         .then(res => {
           let img = new Object();
           img = res.data.对应货物的图片;
@@ -344,29 +364,13 @@ export default {
     getImgUrl() {
       //获取图片链接
       let that = this;
-
       for (let i = 0; i < that.pageNumber; i++) {
-        let form = new FormData();
-        form.append("FileName", that.imgNameList[i]);
-        that.$axios
-          .post("/consumer/showEInvoice/", form, {
-            responseType: "arraybuffer"
-          })
-          .then(res => {
-            that.imgUrlList.push(
-              "data:image/png;base64," +
-                btoa(
-                  new Uint8Array(res.data).reduce(
-                    (res, byte) => res + String.fromCharCode(byte),
-                    ""
-                  )
-                )
-            );
-          })
-          .catch(error => {
-            console.log(error);
-          });
+        that.imgUrlList.push(
+          "http://111.230.173.74:7001/consumer/showEInvoice/?FileName=" +
+            that.imgNameList[i]
+        );
       }
+      that.largeImgUrl=that.imgUrlList[0]
     },
     back() {
       this.$router.push({ path: "/allgoods" });
@@ -416,6 +420,9 @@ export default {
         .catch(error => {
           console.log(error);
         });
+    },
+    changeLarge(index){
+      this.largeImgUrl=this.imgUrlList[index]
     }
   }
 };

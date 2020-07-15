@@ -123,32 +123,8 @@ export default {
     getMsg() {
       let that = this;
       that.sellerMsg = JSON.parse(localStorage.getItem("sellerMsg"));
-
-      let form = new FormData();
-      form.append("FileName", "tx.png");
-      that.$axios
-        .post("/consumer/showEInvoice/", form, {
-          responseType: "arraybuffer"
-        })
-        .then(res => {
-          that.imgUrl =
-            "data:image/png;base64," +
-            btoa(
-              new Uint8Array(res.data).reduce(
-                (res, byte) => res + String.fromCharCode(byte),
-                ""
-              )
-            );
-          let hrs = document.getElementsByTagName("hr");
-          for (let i = 0; i < 3; i++) {
-            hrs[i].style.display = "none";
-          }
-          hrs[2].style.display = "block";
-          that.$router.push({ path: "/allgoods" });
-        })
-        .catch(error => {
-          console.log(error);
-        });
+     that.imgUrl= "http://111.230.173.74:7001/consumer/showEInvoice/?FileName=" +"tx.png"
+       this.$router.push({ path: "/allgoods" });
     }
   }
 };

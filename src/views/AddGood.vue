@@ -435,7 +435,9 @@ export default {
           message:"发布商品成功！"
         })
         localStorage.setItem("productName",that.basicForm.name)
-        that.$router.push({path:'/goodmsg'})
+        setTimeout(function(){
+            that.$router.push({path:'/goodmsg'})
+        },2000)
       }
     },
     newGood() {
@@ -475,7 +477,7 @@ export default {
       form.append("ProductLevel",that.basicForm.slogan)
       form.append("ProductChange",that.basicForm.isSeven)
       form.append("ProductPlace",that.propForm.place)
-      //form.append("",that.propForm.weight)
+      form.append("ProductContent",that.propForm.weight)
       form.append("ProductDdl",that.propForm.ddl)
 
       that.$axios

@@ -3,7 +3,6 @@
     <div style="display:flex;background:#109abf;height:550px;">
       <img src="../assets/bk.jpg" style="width:500px;height:100%;margin-left:80px;" />
 
-
       <!--登陆窗口-->
       <div class="login">
         <center>
@@ -27,20 +26,28 @@
           @click="getCode()"
           class="get-code-btn"
         />
-        <button v-show="!show" disabled style="border:none;width:28%;height: 40px;font-size: 0.8em;background-color: #cdcaca;margin-left:15px;color: #ffffff;">{{count}}s后重新发送</button>
+        <button
+          v-show="!show"
+          disabled
+          style="border:none;width:28%;height: 40px;font-size: 0.8em;background-color: #cdcaca;margin-left:15px;color: #ffffff;"
+        >{{count}}s后重新发送</button>
         <center>
           <input type="button" value="登陆" @click="login()" title="点我登陆" class="login-btn" />
-          <p v-show="isError" style="margin-top:10px;color:red;border:1px solid red;background:#ffebeb;padding-top:5px;padding-bottom:5px;width:80%">
+          <p
+            v-show="isError"
+            style="margin-top:10px;color:red;border:1px solid red;background:#ffebeb;padding-top:5px;padding-bottom:5px;width:80%"
+          >
             <i class="el-icon-warning-outline" style="margin-right:10px"></i>信息有误，请重试
           </p>
-          <p v-show="isEmpty" style="margin-top:-5px;color:red;border:1px solid red;background:#ffebeb;padding-top:5px;padding-bottom:5px;width:80%">
+          <p
+            v-show="isEmpty"
+            style="margin-top:-5px;color:red;border:1px solid red;background:#ffebeb;padding-top:5px;padding-bottom:5px;width:80%"
+          >
             <i class="el-icon-warning-outline" style="margin-right:10px"></i>信息不能为空，请重试
           </p>
-           
         </center>
       </div>
     </div>
-
 
     <!--条款-->
     <div style="height:60px;text-align:center;padding-top:20px;">
@@ -49,17 +56,16 @@
       >继续使用此网站，表示您同意我们的</span>
       <span
         style="font-family: FZLanTingHei-R-GBK;font-size: 1em;font-weight: normal;letter-spacing: 0px;color: #a2c2d7;cursor:pointer;"
-      > 隐私政策</span>
+      >隐私政策</span>
       <button
         style="margin-left:2em;width: 110px;height: 35px;background-color: #a2c2d7;border:none;border-radius: 18px;font-family: FZLanTingHei-R-GBK;font-size: 1em;font-weight: normal;font-stretch: normal;line-height: 27px;letter-spacing: 0px;color: #ffffff;cursor:pointer;"
       >好的</button>
-      
     </div>
   </div>
 </template>
 
 <script>
-import Msg from '../components/Msg'
+import Msg from "../components/Msg";
 export default {
   data() {
     return {
@@ -73,6 +79,7 @@ export default {
       isEmpty: false
     };
   },
+
   methods: {
     login() {
       let that = this;
@@ -89,20 +96,17 @@ export default {
       form.append("UserPassword", that.$md5(that.password));
       form.append("Code", that.code);
 
-      this.$axios
-        .post("/consumer/UserLogin/", form, {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" }
-        })
+      this.$axios.post("/consumer/UserLogin/", form)
         .then(res => {
-           if (res.data == "验证码错误"||res.data=="用户名或密码错误") {
+          if (res.data == "验证码错误" || res.data == "用户名或密码错误") {
             that.isError = true;
           } else {
             that.isError = false;
             let msg = new Object();
             msg = res.data;
             localStorage.setItem("sellerMsg", JSON.stringify(msg));
-            localStorage.setItem("isLogin",true);
-            Msg.$emit("tome","1")
+            localStorage.setItem("isLogin", true);
+            Msg.$emit("tome", "1");
             that.$router.push({ path: "/allgoods" });
           }
         })
@@ -114,10 +118,11 @@ export default {
       //获取验证码
       let that = this;
       that.count = 60;
+
       this.$axios
-        .post("/consumer/SendEmail/")
+        .get("/consumer/SendEmail/")
         .then(res => {
-          if (res.data == "OK") {
+         if (res.data == "OK") {
             that.show = false;
             that.timer = setInterval(() => {
               if (that.count > 0 && that.count <= 60) {

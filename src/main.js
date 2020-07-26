@@ -13,9 +13,9 @@ Vue.config.productionTip = false
 Vue.prototype.$axios = axios  // 挂载在vue实例化对象上
 
 axios.defaults.withCredentials = true
-axios.defaults.baseURL="http://111.230.173.74:7001/"
+axios.defaults.baseURL="https://fzulyt.fun:7001/"
 var instance = axios.create({
-  baseURL:'http://111.230.173.74:7001/',
+  baseURL:'https://fzulyt.fun:7001/',
   timeout:5000,
   headers:{"Content-Type":"multipart/form-data"},
   withCredentialsL:true

@@ -47,6 +47,7 @@
           </p>
         </center>
       </div>
+
     </div>
 
     <!--条款-->
@@ -60,6 +61,7 @@
       <button
         style="margin-left:2em;width: 110px;height: 35px;background-color: #a2c2d7;border:none;border-radius: 18px;font-family: FZLanTingHei-R-GBK;font-size: 1em;font-weight: normal;font-stretch: normal;line-height: 27px;letter-spacing: 0px;color: #ffffff;cursor:pointer;"
       >好的</button>
+    
     </div>
   </div>
 </template>

@@ -6,7 +6,7 @@ import AddGood from '../views/AddGood.vue'
 import AllGoods from '../views/AllGoods.vue'
 import Order from '../views/Order.vue'
 import GoodMsg from '../views/GoodMsg.vue'
-
+import OrderMsg from '../views/OrderMsg.vue'
 
 Vue.use(VueRouter)
 
@@ -34,8 +34,11 @@ Vue.use(VueRouter)
   {
     path: '/goodmsg',
     component: GoodMsg
+  },
+  {
+    path: '/ordermsg',
+    component: OrderMsg
   }
- 
 ]
 
 const router = new VueRouter({

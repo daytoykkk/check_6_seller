@@ -58,7 +58,7 @@
         <hr style="width: 4.8em;" />
       </div>
 
-      <div class="search-box" v-show="isLogin">
+      <div class="search-box" v-show="isShow">
         <div style="width:40px;height:40px;background:#FFFFFF;text-align:center;">
           <img
             src="../assets/search.png"
@@ -81,7 +81,8 @@ export default {
     return {
       isLogin: false,
       imgUrl: "",
-      sellerMsg: ""
+      sellerMsg: "",
+      isShow:false
     };
   },
   mounted() {
@@ -107,7 +108,11 @@ export default {
         });
         return;
       }
-     
+     if(index==3){
+       this.isShow=true
+     }else{
+       this.isShow=false
+     }
       this.$router.push({ path: path });
       let hrs = document.getElementsByTagName("hr");
       for (let i = 0; i < 4; i++) {
@@ -123,8 +128,8 @@ export default {
     getMsg() {
       let that = this;
       that.sellerMsg = JSON.parse(localStorage.getItem("sellerMsg"));
-     that.imgUrl= "http://111.230.173.74:7001/consumer/showEInvoice/?FileName=" +"tx.png"
-       this.$router.push({ path: "/allgoods" });
+     that.imgUrl= "https://fzulyt.fun:7001/consumer/showEInvoice/?FileName=" +"tx.png"
+     this.showHr(2,'/allgoods')
     }
   }
 };

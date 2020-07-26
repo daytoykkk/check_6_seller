@@ -5,44 +5,59 @@
         <p class="title-box-p">{{msg.productName}}</p>
         <div style="float:right;width:8em;text-align:center;border: solid 3px #ffffff;">
           <p
-            style="font-family: FZLanTingHei-B-GBK;font-size: 1.3em;font-weight: normal;font-stretch: normal;line-height: 0.1em;letter-spacing: 0px;color: #ffffff;"
+            @click="dialogFormVisible=true;"
+            title="点我改价格"
+            style="font-family: FZLanTingHei-B-GBK;font-size: 1.3em;font-weight: normal;font-stretch: normal;line-height: 0.1em;letter-spacing: 0px;color: #ffffff;cursor:pointer;"
           >￥{{msg.productPrice}}</p>
+          <el-dialog title="修改价格" :visible.sync="dialogFormVisible">
+            <label for="number">
+              价
+              <span style="margin-left:2em;"></span>格：
+            </label>
+            <input type="text" name="price" id="price" v-model="msg.productPrice" />
+            <div slot="footer" class="dialog-footer">
+              <el-button @click="dialogFormVisible = false">取 消</el-button>
+              <el-button type="primary" @click="dialogFormVisible = false;modify_price()">确 定 修 改</el-button>
+            </div>
+          </el-dialog>
         </div>
       </div>
     </div>
     <!--轮播图-->
     <div class="banner">
       <div class="large-img" style="width:400px;height:400px;">
-        <img :src="largeImgUrl" style="width:400px;height:400px;"/>
+        <img :src="largeImgUrl" style="width:400px;height:400px;" />
       </div>
 
-      
-        <div class="small-box">
-          <div
-            class="iconleft"
-            @click="zuohua()"
-            style="font-size:3em;cursor:pointer;margin-right:auto;"
-          >
-            <i class="el-icon-arrow-left"></i>
-          </div>
-         <div class="fix-box">
-            <div class="li-img">
+      <div class="small-box">
+        <div
+          class="iconleft"
+          @click="zuohua()"
+          style="font-size:3em;cursor:pointer;margin-right:auto;"
+        >
+          <i class="el-icon-arrow-left"></i>
+        </div>
+        <div class="fix-box">
+          <div class="li-img">
             <ul :style="{'margin-left':-calleft+'px'}">
               <li v-for="(item,index) in imgUrlList" :key="index">
-                <img @click="changeLarge(index)" :src="item" style="width:50px;height:50px;cursor:pointer;" />
+                <img
+                  @click="changeLarge(index)"
+                  :src="item"
+                  style="width:50px;height:50px;cursor:pointer;"
+                />
               </li>
             </ul>
           </div>
-         </div>
-          <div
-            class="iconright"
-             @click="youhua()"
-            style="font-size:3em;cursor:pointer;margin-left:auto;"
-          >
-            <i class="el-icon-arrow-right"></i>
-          </div>
         </div>
-    
+        <div
+          class="iconright"
+          @click="youhua()"
+          style="font-size:3em;cursor:pointer;margin-left:auto;"
+        >
+          <i class="el-icon-arrow-right"></i>
+        </div>
+      </div>
     </div>
 
     <!--详情-->
@@ -52,7 +67,7 @@
         <span style="margin-left:2em;"></span>量：
       </label>
       <input type="text" name="number" id="number" v-model="msg.productSurplus" />
-      <button class="modify-btn" @click="modify()">修改数量</button>
+      <button class="modify-btn" @click="modify_number()">修改数量</button>
       <br />
       <br />
       <br />
@@ -181,6 +196,20 @@
   letter-spacing: 0px;
   color: #6d6d6d;
 }
+#price{
+   width: 145px;
+  height: 2em;
+  border-radius: 5px;
+  border: solid 1px #cdcaca;
+  padding-left: 10px;
+  font-family: FZLanTingHei-R-GBK;
+  font-size: 1em;
+  font-weight: normal;
+  font-stretch: normal;
+  line-height: 23px;
+  letter-spacing: 0px;
+  color: #6d6d6d;
+}
 .modify-btn {
   margin-left: 2em;
   width: 113px;
@@ -251,9 +280,9 @@
   margin-top: 2em;
   width: 100%;
 }
-.fix-box{
+.fix-box {
   width: 320px;
-    overflow: hidden;
+  overflow: hidden;
 }
 .li-img {
   width: 320px;
@@ -280,7 +309,8 @@ export default {
       id: "",
       calleft: 40,
       pageNumber: 0, //图片个数
-      dialogVisible: false
+      dialogVisible: false,
+      dialogFormVisible: false
     };
   },
   mounted() {
@@ -306,6 +336,7 @@ export default {
         )
         .then(res => {
           that.msg = res.data.这个货物;
+         
           that.id = that.msg.productId;
           that.getImgName(that.id);
         })
@@ -314,17 +345,17 @@ export default {
         });
     },
     zuohua() {
-       if(this.pageNumber==6){
+      if (this.pageNumber == 6) {
         this.calleft = 40;
-      }else{
-        return
+      } else {
+        return;
       }
     },
     youhua() {
-      if(this.pageNumber==6){
+      if (this.pageNumber == 6) {
         this.calleft = 100;
-      }else{
-        return
+      } else {
+        return;
       }
     },
     getImgName(id) {
@@ -366,11 +397,11 @@ export default {
       let that = this;
       for (let i = 0; i < that.pageNumber; i++) {
         that.imgUrlList.push(
-          "http://111.230.173.74:7001/consumer/showEInvoice/?FileName=" +
+          "https://fzulyt.fun:7001/consumer/showEInvoice/?FileName=" +
             that.imgNameList[i]
         );
       }
-      that.largeImgUrl=that.imgUrlList[0]
+      that.largeImgUrl = that.imgUrlList[0];
     },
     back() {
       this.$router.push({ path: "/allgoods" });
@@ -401,14 +432,38 @@ export default {
           console.log(error);
         });
     },
-    modify() {
+    modify_number() {
       let that = this;
       let form = new FormData();
       form.append("ProductId", that.id);
-      form.append("ProductSurplus", that.msg.productSurplus);
+      form.append("ProductSurplus", that.msg.ProductSurplus);
 
       this.$axios
         .post("/consumer/IncreaseProduct/", form, {
+          headers: { "Content-Type": "application/x-www-form-urlencoded" }
+        })
+        .then(res => {
+          that.$message({
+            type: "success",
+            message: "修改数量成功！"
+          });
+          that.dialogFormVisible=false;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    changeLarge(index) {
+      this.largeImgUrl = this.imgUrlList[index];
+    },
+    modify_price() {
+      let that = this;
+      let form = new FormData();
+      form.append("ProductId", that.id);
+      form.append("ProductPrice", that.msg.productPrice);
+
+      this.$axios
+        .post("/consumer/changePriceProduct/", form, {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then(res => {
@@ -420,9 +475,6 @@ export default {
         .catch(error => {
           console.log(error);
         });
-    },
-    changeLarge(index){
-      this.largeImgUrl=this.imgUrlList[index]
     }
   }
 };

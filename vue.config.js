@@ -77,16 +77,19 @@ module.exports = {
             },
             host: "localhost",
             port: 8080, // 端口号
-            https: false, // https:{type:Boolean}
+            https: true, // https:{type:Boolean}
             open: false, //配置自动启动浏览器
             hotOnly: true, // 热更新
             // proxy: 'http://localhost:8080'   // 配置跨域处理,只有一个代理
             proxy: { //配置多个跨域
                 "/api": {
-                    target: "http://111.230.173.74:7001/api/",
+                    target: "https://fzulyt.fun:7001/api/",
                     changeOrigin: true,
-                    // ws: true,//websocket支持
+                    ws: true,//websocket支持
                     secure: false,
+                    headers: {
+                        Referer:"https://fzulyt.fun:7001/api/"
+                      },
                     pathRewrite: {
                         "^/api": "/"
                     }

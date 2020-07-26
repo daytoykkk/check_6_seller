@@ -159,7 +159,7 @@ export default {
               continue;
             } else {
               that.imgs.push(
-                "http://111.230.173.74:7001/consumer/showEInvoice/?FileName=" +
+                "https://fzulyt.fun:7001/consumer/showEInvoice/?FileName=" +
                   img[i].imageName
               );
               break;

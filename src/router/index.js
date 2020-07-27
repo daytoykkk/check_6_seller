@@ -10,6 +10,15 @@ import OrderMsg from '../views/OrderMsg.vue'
 
 Vue.use(VueRouter)
 
+const originalReplace = VueRouter.prototype.replace;
+VueRouter.prototype.replace = function replace(location) {
+  return originalReplace.call(this, location).catch((err) => err);
+};
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch((err) => err);
+};
+
   const routes = [
   {
     path: '/',
@@ -46,5 +55,6 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
 
 export default router

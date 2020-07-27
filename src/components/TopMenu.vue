@@ -65,8 +65,8 @@
             style="width:26px;height:26px;background:#FFFFFF;margin-top:10px;"
           />
         </div>
-        <input type="text" placeholder="请输入订单号" />
-        <div class="btn">
+        <input type="text" placeholder="请输入商品名称" v-model="searchName"/>
+        <div class="btn" @click="searchN()">
           <p>搜索</p>
         </div>
       </div>
@@ -82,7 +82,8 @@ export default {
       isLogin: false,
       imgUrl: "",
       sellerMsg: "",
-      isShow:false
+      isShow:false,
+      searchName:""
     };
   },
   mounted() {
@@ -108,7 +109,7 @@ export default {
         });
         return;
       }
-     if(index==3){
+     if(index==2){
        this.isShow=true
      }else{
        this.isShow=false
@@ -130,6 +131,10 @@ export default {
       that.sellerMsg = JSON.parse(localStorage.getItem("sellerMsg"));
      that.imgUrl= "https://fzulyt.fun:7001/consumer/showEInvoice/?FileName=" +"tx.png"
      this.showHr(2,'/allgoods')
+    },
+    searchN(){
+    localStorage.setItem("searchName",this.searchName)
+     this.$router.push({path:'/about'})
     }
   }
 };

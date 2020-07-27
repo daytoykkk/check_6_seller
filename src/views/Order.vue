@@ -14,7 +14,7 @@ export default {
     initWebSocket () {
         console.log("hhh")
       let _this = this;
-      var ws = new WebSocket("wss://fuzlyt.fun:7004/websocket/test");
+      let ws = new WebSocket("wss://fzulyt.fun:7007/websocket/1/1");
       _this.ws = ws;
 
       ws.onopen = function (e) {
@@ -25,10 +25,10 @@ export default {
         console.log("关闭WebSocket连接！");
       };
       ws.onerror = function (e) {
-        console.log(e);
+        console.log(e.data);
       };
       ws.onmessage = function (e) {
-        console.log("订单：" + e);
+        console.log("订单：" + eval("(" + e.data + ")"));
       };
     },
   },

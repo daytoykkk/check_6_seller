@@ -3,9 +3,9 @@
     <!--订单状态和订单号-->
     <div class="orderId_state">
       <span class="os_title">订单号：</span>
-      <span class="os_content">12345</span>
+      <span class="os_content">{{msg.orderId}}</span>
       <span class="os_title" style="margin-left:4em;">订单状态：</span>
-      <span class="os_content">正在交易</span>
+      <span class="os_content">{{tagName(msg.orderState)}}</span>
     </div>
     <!--主框-->
     <div class="main">
@@ -13,12 +13,11 @@
       <div class="main_box">
         <p class="main_title">买家信息</p>
         <div class="content_box">
-          <span class="content_box_title">用户头像：</span>
-          <span>hhhh</span>
-          <br />
+         <div style="height:50px;display:flex;align-items: center;"> <span class="content_box_title">用户头像：</span>
+         <img :src="msg.face" style="width:50px;height:50px;border-radius:50%;"></div>
           <br />
           <span class="content_box_title">用户昵称 :</span>
-          <span class="content_box_content">daytoy</span>
+          <span class="content_box_content">{{msg.name}}</span>
         </div>
       </div>
       <!--订单信息-->
@@ -26,19 +25,19 @@
         <p class="main_title">订单信息</p>
         <div class="content_box">
           <span class="content_box_title">订单日期 :</span>
-          <span class="content_box_content">2020-07-24</span>
+          <span class="content_box_content">{{msg.time}}</span>
           <br />
           <br />
           <span class="content_box_title">自提时间 :</span>
-          <span class="content_box_content">2020-07-25 18：00</span>
+          <span class="content_box_content">{{msg.orderTime}}</span>
           <br />
           <br />
           <span class="content_box_title">物品数量 :</span>
-          <span class="content_box_content">3</span>
+          <span class="content_box_content">{{totalNumber}}</span>
           <br />
           <br />
           <span class="content_box_title">商品总额 :</span>
-          <span class="content_box_content">￥1005</span>
+          <span class="content_box_content">￥{{totalPrice}}</span>
           <br />
           <br />
           <span class="content_box_title">买家留言 :</span>
@@ -70,7 +69,7 @@
       <!--总额-->
       <div class="totalPrice">
         <span class="content_box_title">商品总额：</span>
-        <span class="content_box_content">￥120</span>
+        <span class="content_box_content">￥{{totalPrice}}</span>
         <br />
         <br />
         <span class="content_box_title">优惠券：</span>
@@ -79,7 +78,7 @@
         <br />
         <hr style="border: solid 1px #b2b2b2;" />
         <span class="content_box_content">实际支付：</span>
-        <span class="content_box_content" style="color:red;">￥100</span>
+        <span class="content_box_content" style="color:red;">￥{{totalPrice}}</span>
       </div>
     </div>
   </div>
@@ -212,3 +211,55 @@
     padding-bottom: 5em;
 }
 </style>
+
+<script>
+export default {
+  data(){
+    return{
+      goods:[],
+      msg:{},
+      totalNumber:0,
+      totalPrice:0
+    }
+  },
+  methods:{
+    getMsg(){
+      let that=this;
+      let orderid=localStorage.getItem("orderId")
+      let id=localStorage.getItem("id")
+      let form=new FormData()
+      form.append("OrderId",orderid)
+      form.append("Id",id)
+      that.$axios.post("https://fzulyt.fun:7008/thread/getOrderProduct/",form)
+      .then(res=>{
+       that.goods=JSON.parse(res.data.这个订单的货物)
+      })
+      .catch(error=>{
+        console.log(error)
+      })
+
+      that.$axios.post("https://fzulyt.fun:7008/thread/getOrder/",form)
+      .then(res=>{
+        that.totalNumber=res.data.totalNumber
+        that.totalPrice=res.data.totalPrice
+        that.msg=res.data.这个订单的信息
+      })
+      .catch(error=>{
+        console.log(error)
+      })
+    },
+     tagName(e){
+      if (e == "yes") {
+        return "交易完成";
+      } else if (e == "no") {
+        return "正在交易";
+      } else if (e == "concel") {
+        return "订单取消";
+      }
+    }
+  },
+  mounted(){
+    this.getMsg()
+  }
+}
+</script>

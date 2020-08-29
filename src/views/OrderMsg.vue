@@ -41,7 +41,7 @@
           <br />
           <br />
           <span class="content_box_title">买家留言 :</span>
-          <span class="content_box_content">加香菜</span>
+          <span class="content_box_content">无</span>
         </div>
       </div>
       <!--商品清单-->
@@ -54,15 +54,17 @@
             <p style="flex:1">数量</p>
             <p style="flex:1">小计</p>
           </div>
-          <div class="good_item">
-            <div class="image_box"></div>
+          <div class="good_item" v-for="(item,index) in goods" :key="index">
+            <div class="image_box">
+              <img :src="imgUrl+JSON.parse(item.product).productState" style="width:4em;height:4em;">
+            </div>
             <p
               class="good_content"
               style="flex:5.5;overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"
-            >薯片</p>
-            <p class="good_content" style="flex:1.2">￥120</p>
-            <p class="good_content" style="flex:0.9">2</p>
-            <p class="good_content" style="flex:0.8">￥240</p>
+            >{{JSON.parse(item.product).productName}}</p>
+            <p class="good_content" style="flex:1.2">￥{{JSON.parse(item.product).productPrice}}</p>
+            <p class="good_content" style="flex:0.9">{{item.number}}</p>
+            <p class="good_content" style="flex:0.8">￥{{JSON.parse(item.product).productPrice*item.number}}</p>
           </div>
         </div>
       </div>
@@ -73,7 +75,7 @@
         <br />
         <br />
         <span class="content_box_title">优惠券：</span>
-        <span class="content_box_content">-￥20</span>
+        <span class="content_box_content">-￥0</span>
         <br />
         <br />
         <hr style="border: solid 1px #b2b2b2;" />
@@ -219,7 +221,8 @@ export default {
       goods:[],
       msg:{},
       totalNumber:0,
-      totalPrice:0
+      totalPrice:0,
+       imgUrl:"https://111.230.173.74:7001/consumer/showEInvoice/?FileName="
     }
   },
   methods:{

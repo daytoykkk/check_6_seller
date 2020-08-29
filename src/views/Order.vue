@@ -1,11 +1,11 @@
 <template>
   <div>
     <div style="width:80%;margin-left:10%;">
-      <el-table ref="filterTable" :data="tableData" style="width: 100%">
+      <el-table ref="filterTable" :data="tableData" style="width: 100%" :default-sort="{prop:'time',order:'descending'}">
         <el-table-column prop="time" label="订单日期" sortable width="200" column-key="date"></el-table-column>
         <el-table-column prop="face" label="头像" width="110">
           <template slot-scope="scope">
-            <el-badge is-dot class="item" :hidden="scope.row.see=='no'?true:false">
+            <el-badge is-dot class="item" :hidden="scope.row.see=='yes'?true:false">
               <img :src="scope.row.face" style="width:50px;height:50px;border-radius:50%;" />
             </el-badge>
           </template>
@@ -30,7 +30,7 @@
         </el-table-column>
         <el-table-column label="详情">
           <template slot-scope="scope">
-            <el-button size="mini" @click="toOrderMsg(scope.$index, scope.row.orderId,scope.row.id)">查看详情</el-button>
+            <el-button size="mini" @click="toOrderMsg(scope.$index, scope.row.orderId,scope.row.id,scope.row.see)">查看详情</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -56,7 +56,7 @@ export default {
     };
   },
   mounted() {
-    //this.initWebSocket();
+    this.initWebSocket();
     this.getMsg();
   },
   methods: {
@@ -72,7 +72,6 @@ export default {
         });
     },
     initWebSocket() {
-      console.log("hhh");
       let _this = this;
       let ws = new WebSocket("wss://fzulyt.fun:7007/websocket/1/1");
       _this.ws = ws;
@@ -88,7 +87,23 @@ export default {
         console.log(e.data);
       };
       ws.onmessage = function (e) {
-        console.log("订单：" + eval("(" + e.data + ")"));
+        let msg=new Object();
+        msg=JSON.parse(eval("(" + e.data + ")"));
+       
+      if(msg.orderState=="no"){
+        _this.tableData.push(msg)
+      }else {
+        console.log(msg.orderId)
+          for(let i=0, len =_this.tableData.length;i<len;i++){
+              if(_this.tableData[i].orderId==msg.orderId){
+                _this.tableData.splice(i,1)
+                break;
+              }
+          }
+
+          _this.tableData.push(msg)
+      }
+
       };
     },
     resetDateFilter() {
@@ -125,10 +140,23 @@ export default {
         return "订单取消";
       }
     },
-    toOrderMsg(index, orderid,id) {
+    toOrderMsg(index, orderid,id,isSee) {
+      let that=this;
       localStorage.setItem("orderId",orderid)
       localStorage.setItem("id",id.replace('\"',''))
       this.$router.push({path:'/ordermsg'})
+      if(isSee=='no'){
+        let form=new FormData()
+        form.append("OrderId",orderid)
+        that.$axios
+        .post("/consumer/see/",form)
+        .then((res) => {
+         
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }
     }
   }
 };

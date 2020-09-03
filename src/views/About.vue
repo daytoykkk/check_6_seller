@@ -104,7 +104,7 @@ export default {
     return {
       name: "",
       list: [],
-       imgUrl:"https://111.230.173.74:7001/consumer/showEInvoice/?FileName="
+       imgUrl:"https://fzulyt.fun:7001/consumer/showEInvoice/?FileName="
     };
   },
   mounted() {
